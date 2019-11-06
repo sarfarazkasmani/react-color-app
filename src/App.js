@@ -4,9 +4,6 @@ import seedColors from './seedColors'
 import { generatePalette } from './colorHelpers'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div>
