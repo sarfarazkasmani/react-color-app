@@ -30,6 +30,7 @@ class Navbar extends Component {
             open: false
         })
     }
+    
 	render() {
 		const { level, changeLevel } = this.props;
 		const { format, open } = this.state;
