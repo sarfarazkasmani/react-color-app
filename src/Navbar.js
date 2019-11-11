@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -16,44 +16,46 @@ class Navbar extends Component {
 			format: 'hex',
 			open: false
 		};
-        this.handleFormatChange = this.handleFormatChange.bind(this);
-        this.closeSnackbar = this.closeSnackbar.bind(this);
+		this.handleFormatChange = this.handleFormatChange.bind(this);
+		this.closeSnackbar = this.closeSnackbar.bind(this);
 	}
 	handleFormatChange(event) {
 		this.setState({
-            format: event.target.value,
-            open: true
+			format: event.target.value,
+			open: true
 		});
-        this.props.handleChange(event.target.value);
-    }
-    closeSnackbar() {
-        this.setState({
-            open: false
-        })
-    }
-    
+		this.props.handleChange(event.target.value);
+	}
+	closeSnackbar() {
+		this.setState({
+			open: false
+		});
+	}
+
 	render() {
-		const { level, changeLevel } = this.props;
+		const { level, changeLevel, showingAllColors } = this.props;
 		const { format, open } = this.state;
 		return (
 			<header className="Navbar">
 				<div className="logo">
 					<Link to="/">reactcolorpicker</Link>
 				</div>
-				<div className="slider-container">
-					<span>Level: {level}</span>
-					<div className="slider">
-						<Slider
-							defaultValue={level}
-							step={100}
-							min={100}
-							max={900}
-							onAfterChange={changeLevel}
-						/>
+				{showingAllColors && (
+					<div className="slider-container">
+						<span>Level: {level}</span>
+						<div className="slider">
+							<Slider
+								defaultValue={level}
+								step={100}
+								min={100}
+								max={900}
+								onAfterChange={changeLevel}
+							/>
+						</div>
 					</div>
-				</div>
+				)}
 				<div className="select-container">
-					<Select value={format} onChange={this.handleFormatChange}>
+					<Select value={format} onChange={this.handleFormatChange} showingAllColors={false}>
 						<MenuItem value="hex">HEX - #ffffff</MenuItem>
 						<MenuItem value="rgb">RGB - rgb(255, 255, 255)</MenuItem>
 						<MenuItem value="rgba">RGBA - rgba(255, 255, 255, 1.0)</MenuItem>
@@ -69,8 +71,8 @@ class Navbar extends Component {
 					message={<span id="message-id">Format Changed to {format.toUpperCase()}</span>}
 					ContentProps={{
 						'aria-describedby': 'message-id'
-                    }}
-                    onClose={this.closeSnackbar}
+					}}
+					onClose={this.closeSnackbar}
 					action={[
 						<IconButton onClick={this.closeSnackbar} color="inherit" key="close" aria-label="close">
 							<CloseIcon />
